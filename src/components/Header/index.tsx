@@ -14,7 +14,7 @@ export const Header = ({ minHeader, title }: HeaderProps) => {
           <div className="bgWrap">
             <Image
               alt="barbecue"
-              src="/bbq-pattern.png"
+              src="/bbq.svg"
               layout="fill"
               objectFit="cover"
               quality={100}

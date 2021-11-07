@@ -6,11 +6,12 @@ import { Input } from "components/Form/Input";
 import { Button } from "components/Form/Button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
-
+import { useRouter } from "next/router";
 import { signInFormSchema } from "shared/validators/index";
 import { useEffect } from "react";
 
 const Home: NextPage = () => {
+  const { push } = useRouter();
   const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(signInFormSchema),
   });
@@ -29,11 +30,10 @@ const Home: NextPage = () => {
     // }
 
     reset();
-
+    push("/agendamentos");
     console.log(data);
   };
 
- 
   return (
     <>
       <Layout title="Sign in | Barbecues">
