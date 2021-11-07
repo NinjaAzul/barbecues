@@ -42,12 +42,15 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     --main: #FFD836;
     --main-opacity: rgba(255,216,54,0.8);
+    --background-modal:#f5da6a;
     --degrade:  linear-gradient(0deg,#FFD836 78%,rgba(255,216,54,0) 100%);
     --error:#DC1637;
     --dark: #1B1B1F;
     --white: #fff;
+    --white-13: rgba(0, 0, 0, 0,13);
     --black: #000000;
-    --black-80: hsla(0, 0%, 0%, 0,8);
+    --black-80: hsla(0, 0%, 0%, 0.8);
+    --gray:#F1F1F1;
   }
 
   &::-webkit-scrollbar {

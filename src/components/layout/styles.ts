@@ -19,7 +19,7 @@ export const Container = styled.div<ContainerProps>`
   ${({ whiteBackground }) =>
     whiteBackground &&
     css`
-      background: var(--white);
+      background: var(--white-13);
     `}
 `;
 
