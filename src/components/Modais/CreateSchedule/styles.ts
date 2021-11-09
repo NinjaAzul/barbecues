@@ -16,6 +16,19 @@ export const ModalContent = styled.div`
   transition: all 0.3s;
   gap:2rem;
 
+.form-container-modal{
+    padding: 5rem 3rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(30rem - 3rem);
+    width: 100%;
+}
+
+.container-calendar{
+  position: relative;
+  z-index: 9999999999999999999999999;
+}
 
   header{
     padding: 1rem;

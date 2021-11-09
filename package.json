@@ -8,9 +8,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hassanmojab/react-modern-calendar-datepicker": "^3.1.7",
     "@hookform/resolvers": "^2.8.3",
     "@material-ui/core": "^4.12.3",
     "axios": "^0.24.0",
+    "date-fns": "^2.25.0",
     "next": "12.0.3",
     "nookies": "^2.5.2",
     "polished": "^4.1.3",

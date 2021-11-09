@@ -1,8 +1,14 @@
 import React from "react";
 import Modal, { Styles } from "react-modal";
 import { GrClose } from "react-icons/gr";
-import { ButtonBase } from "@material-ui/core";
+import { ButtonBase, Grid } from "@material-ui/core";
 import { ModalContent } from "./styles";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import { signInFormSchema } from "shared/validators/index";
+import { Input } from "components/Form/Input";
+import { Button } from "components/Form/Button";
+import { SelectDate } from "components/SelectRentalRange";
 
 const customStyles: Styles = {
   content: {
@@ -37,6 +43,31 @@ export const CreateSchedule = ({
   function toggleOk() {
     onRequestClose();
   }
+
+  const { register, handleSubmit, formState, reset } = useForm({
+    resolver: yupResolver(signInFormSchema),
+  });
+  const { isSubmitting, isSubmitSuccessful, errors } = formState;
+
+  type SignInFormData = {
+    email: string;
+    password: string;
+  };
+
+  const handleCreateSchedule: SubmitHandler<SignInFormData> = async (
+    data,
+    event
+  ) => {
+    // await new Promise((resolve) => setTimeout(resolve, 6000)); // 6sig awaiting.
+
+    // // if (isSubmitSuccessful) {
+    // //   alert("deu bom cuzão");
+    // // }
+
+    // reset();
+    console.log(data);
+  };
+
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -48,7 +79,7 @@ export const CreateSchedule = ({
     >
       <ModalContent>
         <header>
-          <div className="hidden"/>
+          <div className="hidden" />
           <div>{title}</div>
           <div>
             <ButtonBase className="btn-x" onClick={() => onRequestClose()}>
@@ -56,7 +87,50 @@ export const CreateSchedule = ({
             </ButtonBase>
           </div>
         </header>
-        <h1>Teste</h1>
+
+        <form
+          className="form-container-modal"
+          onSubmit={handleSubmit(handleCreateSchedule)}
+        >
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={6}>
+              <Input
+                variant="withBorder"
+                name="title"
+                type="text"
+                label="Título"
+                placeholder="Título"
+                error={errors.email}
+                {...register("email")}
+              />
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              sm={6}
+            >
+              <Input
+                variant="withBorder"
+                name="date-event"
+                type="date"
+                label="Data"
+                placeholder="Data"
+                error={errors.email}
+                {...register("email")}
+              />
+            </Grid>
+          </Grid>
+
+          <Button
+            disabled={isSubmitting}
+            loading={isSubmitting}
+            loadingSize={20}
+            type="submit"
+          >
+            Entrar
+          </Button>
+        </form>
       </ModalContent>
     </Modal>
   );

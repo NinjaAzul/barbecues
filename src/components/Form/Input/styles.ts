@@ -6,6 +6,10 @@ interface ContainerProps {
   error?: boolean;
 }
 
+interface ContentProps {
+  variant?: "withBorder";
+}
+
 export const Container = styled.div<ContainerProps>`
   display: flex;
   width: 100%;
@@ -20,9 +24,13 @@ export const Container = styled.div<ContainerProps>`
         border-color: var(--main) !important;
       }
     `}
+
+
 `;
 
-export const Content = styled.div`
+
+
+export const Content = styled.div<ContentProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,6 +75,15 @@ export const Content = styled.div`
    border: 1px solid #fff;
    border-radius: 2px;
    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.06);
+
+
+    ${({ variant }) =>
+    css`
+      
+        border: ${variant === "withBorder" && "1px solid var(--background-modal)"} !important;
+      
+     `
+  }
 
    &::placeholder{
     color:var(--black-80);

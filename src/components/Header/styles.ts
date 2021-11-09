@@ -8,7 +8,7 @@ interface ContainerProps {
 export const Container = styled.div<ContainerProps>`
  display: flex;
  width: 100%;
- height: 20rem;
+ height: 43vh;
  background: var(--main);
 
  ${({ minHeader }) =>

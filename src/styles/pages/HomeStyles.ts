@@ -12,7 +12,7 @@ export const Container = styled.div`
     width: 100%;
     background: var(--degrade);
     position: relative;
-    top: -50px;
+    top: -60px;
     z-index: 1;
 `;
 

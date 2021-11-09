@@ -99,4 +99,9 @@ export const ModalStyleGlobal = createGlobalStyle`
   .ReactModal__Content--after-open {
     transform: translateY(0);
   }
+
+  .Datepiker_calendarContainer{ 
+    position: relative;
+    z-index: 999999999999999999999999;
+  }
 `;

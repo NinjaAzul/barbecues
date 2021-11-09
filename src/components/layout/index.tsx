@@ -25,7 +25,7 @@ export const Layout = ({
         <Styles.Content>{children}</Styles.Content>
 
         <Styles.Footer>
-            <LogoFooterTrinca />
+            <LogoFooterTrinca size={70}/>
           </Styles.Footer>
       </Styles.Container>
     </>

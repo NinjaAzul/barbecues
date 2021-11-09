@@ -11,16 +11,17 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   mb?: string;
   error?: FieldError;
+  variant?:"withBorder"
 }
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
-  { error = null, name, label, mb, ...rest },
+  { error = null, name, label, mb, variant, ...rest },
   ref
 ) => {
   return (
     <>
       <Styles.Container mb={mb} error={!!error}>
-        <Styles.Content>
+        <Styles.Content variant={variant}>
           <div>
             <label htmlFor={name}>{label}</label>
           </div>
