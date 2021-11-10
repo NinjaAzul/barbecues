@@ -40,6 +40,14 @@ export const Content = styled.div<ContentProps>`
   overflow: hidden;
   gap: 1rem;
 
+  ${({ variant }) =>
+    css`
+      
+        gap: ${variant === "withBorder" && "0.3rem"} !important;
+        
+     `
+  }
+
 
   & div {
     display: flex;
@@ -81,7 +89,7 @@ export const Content = styled.div<ContentProps>`
     css`
       
         border: ${variant === "withBorder" && "1px solid var(--background-modal)"} !important;
-      
+
      `
   }
 

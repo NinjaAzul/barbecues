@@ -1,8 +1,9 @@
 import * as Styles from "./styles";
 import { Money, Users } from "assets/icons/Icons";
-import React from "react";
+import React, { useState } from "react";
 import { ButtonBase } from "@material-ui/core";
 import { Peaple } from "../Peaple";
+import { AddPeople } from "components/Modais/AddPeaple";
 
 interface DetailsProps {
   title: string;
@@ -50,6 +51,8 @@ export const Details = ({
   quantity,
   moneyFormated,
 }: DetailsProps) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
   return (
     <>
       <Styles.Container>
@@ -72,9 +75,8 @@ export const Details = ({
                 <span>{moneyFormated}</span>
               </div>
 
-              <ButtonBase>
+              <ButtonBase onClick={() => setModalIsOpen(true)}>
                 NOVO <Users color="var(--black)" size={10} />
-                {/* onClick={() => } */}
               </ButtonBase>
             </main>
           </header>
@@ -84,6 +86,11 @@ export const Details = ({
           ))}
         </Styles.Content>
       </Styles.Container>
+      <AddPeople
+        title="Adicionar a Lista"
+        modalIsOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+      />
     </>
   );
 };

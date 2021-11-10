@@ -10,7 +10,7 @@ export const Container = styled.div<ContainerProps>`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 100vw;
+  min-width: 100vw;
   min-height: 100vh;
   position: relative;
   background: var(--main);

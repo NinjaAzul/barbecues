@@ -8,7 +8,6 @@ import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { signInFormSchema } from "shared/validators/index";
 import { Input } from "components/Form/Input";
 import { Button } from "components/Form/Button";
-import { SelectDate } from "components/SelectRentalRange";
 
 const customStyles: Styles = {
   content: {
@@ -35,7 +34,7 @@ interface ModalProps {
   title: string;
 }
 
-export const CreateSchedule = ({
+export const AddPeople = ({
   title,
   modalIsOpen,
   onRequestClose,
@@ -43,6 +42,8 @@ export const CreateSchedule = ({
   function toggleOk() {
     onRequestClose();
   }
+
+  const isEdit = true;
 
   const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(signInFormSchema),
@@ -54,7 +55,21 @@ export const CreateSchedule = ({
     password: string;
   };
 
-  const handleCreateSchedule: SubmitHandler<SignInFormData> = async (
+  const handleAddPeople: SubmitHandler<SignInFormData> = async (
+    data,
+    event
+  ) => {
+    // await new Promise((resolve) => setTimeout(resolve, 6000)); // 6sig awaiting.
+
+    // // if (isSubmitSuccessful) {
+    // //   alert("deu bom cuzão");
+    // // }
+
+    // reset();
+    console.log(data);
+  };
+
+  const handleEditPeople: SubmitHandler<SignInFormData> = async (
     data,
     event
   ) => {
@@ -90,61 +105,41 @@ export const CreateSchedule = ({
 
         <form
           className="form-container-modal"
-          onSubmit={handleSubmit(handleCreateSchedule)}
+          onSubmit={
+            isEdit
+              ? handleSubmit(handleEditPeople)
+              : handleSubmit(handleAddPeople)
+          }
         >
           <Grid container spacing={1}>
             <Grid item xs={12} sm={6}>
-              <Input
-                variant="withBorder"
-                name="title"
-                type="text"
-                label="Título"
-                placeholder="Título"
-                error={errors.email}
-                {...register("email")}
-              />
+              <p className="value-suggestion">
+                Com Bebida: <span> R$: 100,00</span>
+              </p>
             </Grid>
 
-            <Grid
-              item
-              xs={12}
-              sm={6}
-            >
+            <Grid item xs={12} sm={6}>
+              <p className="value-suggestion">
+                Sem Bebida: <span> R$: 50,00</span>
+              </p>
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <Input
                 variant="withBorder"
-                name="date-event"
-                type="date"
-                label="Data"
-                placeholder="Data"
+                name="nome"
+                type="text"
+                label="Nome"
+                placeholder="Nome"
                 error={errors.email}
                 {...register("email")}
               />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-            >
+            <Grid item xs={12} sm={6}>
               <Input
                 variant="withBorder"
-                name="noDrink"
+                name="value"
                 type="number"
-                label="Sem Bebida"
-                placeholder="R$ 0,00"
-                error={errors.email}
-                {...register("email")}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-            >
-              <Input
-                variant="withBorder"
-                name="WithDrink"
-                type="number"
-                label="Com bebida"
+                label="Valor de Contribuição"
                 placeholder="R$ 0,00"
                 error={errors.email}
                 {...register("email")}
@@ -158,7 +153,7 @@ export const CreateSchedule = ({
             loadingSize={20}
             type="submit"
           >
-            Entrar
+            {isEdit ? "Atualizar " : "Entrar"}
           </Button>
         </form>
       </ModalContent>

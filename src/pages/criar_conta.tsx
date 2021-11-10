@@ -6,17 +6,15 @@ import { Input } from "components/Form/Input";
 import { Button } from "components/Form/Button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
-import { signInFormSchema } from "shared/validators/index";
+import { signUpFormSchema } from "shared/validators/index";
 import { useRouter } from "next/router";
-import { useAuth } from "contexts/AuthContext";
-import Link from "next/link";
-import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { api } from "services/client";
 
-const Home: NextPage = () => {
+const CreateAccount: NextPage = () => {
   const { push } = useRouter();
-  const { signIn } = useAuth();
   const { register, handleSubmit, formState, reset } = useForm({
-    resolver: yupResolver(signInFormSchema),
+    resolver: yupResolver(signUpFormSchema),
   });
   const { isSubmitting, errors } = formState;
 
@@ -25,23 +23,32 @@ const Home: NextPage = () => {
     password: string;
   };
 
-  const handleSignIn: SubmitHandler<SignInFormData> = async (data, event) => {
+  const handleSignUp: SubmitHandler<SignInFormData> = async (values, event) => {
     event.preventDefault();
-    await signIn(data);
+
+    try {
+      const { data } = await api.post("/signup", values);
+      reset();
+      toast.success("Usuário criado com sucesso!");
+      push("/agendamentos");
+    } catch (err) {
+      console.error(err.reponse);
+      toast.error("Ops... algo deu errado!");
+    }
   };
 
   return (
     <>
-      <Layout title="Sign in | Barbecues">
-        <Header title="Agenda de Churras" />
+      <Layout title="Sign up | Barbecues">
+        <Header title="Cadastrar" />
         <Styles.Container>
           <Styles.Content>
-            <form className="form" onSubmit={handleSubmit(handleSignIn)}>
+            <form onSubmit={handleSubmit(handleSignUp)}>
               <Input
                 name="email"
                 label="E-mail"
                 placeholder="E-mail"
-                mb="1.5rem"
+                mb="1rem"
                 error={errors.email}
                 {...register("email")}
               />
@@ -49,24 +56,29 @@ const Home: NextPage = () => {
                 name="password"
                 label="Senha"
                 placeholder="Senha"
-                mb="2.5rem"
+                mb="1rem"
                 type="password"
                 error={errors.password}
                 {...register("password")}
               />
 
+              <Input
+                name="confirm"
+                label="Confirme"
+                placeholder="Confirme"
+                mb="2.5rem"
+                type="password"
+                error={errors.confirm}
+                {...register("confirm")}
+              />
               <Button
                 disabled={isSubmitting}
                 loading={isSubmitting}
                 loadingSize={20}
                 type="submit"
               >
-                Entrar
+                Criar
               </Button>
-
-              <Link href="/criar_conta">
-                <a className="link">Criar nova conta?</a>
-              </Link>
             </form>
           </Styles.Content>
         </Styles.Container>
@@ -75,4 +87,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default CreateAccount;

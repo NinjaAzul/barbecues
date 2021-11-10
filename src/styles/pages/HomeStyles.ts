@@ -21,6 +21,28 @@ export const Content = styled.div`
  flex-direction: column;
  align-items: center;
  justify-content:center;
+
+
+ .link{
+     margin-top: 0.5rem;
+    color: var(--black-80);
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: all 2s;
+
+    &:hover{
+        filter: brightness(0.7);
+    }
+ }
+
+ .form{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+ }
 `;
 
 

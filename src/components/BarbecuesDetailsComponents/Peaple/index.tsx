@@ -4,6 +4,7 @@ import { MdModeEdit } from "react-icons/md";
 import React, { useState } from "react";
 import { ButtonBase } from "@material-ui/core";
 import { Checkbox } from "components/Form/CheckBox";
+import { AddPeople } from "components/Modais/AddPeaple";
 
 type Peaple = {
   isChecked: boolean;
@@ -18,6 +19,7 @@ interface PeapleProps {
 
 export const Peaple = ({ peaple }: PeapleProps) => {
   const [isChecked, setIsChecked] = useState(peaple.isChecked);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const handleOnChange = () => {
     setIsChecked(!isChecked);
@@ -37,7 +39,7 @@ export const Peaple = ({ peaple }: PeapleProps) => {
 
         <div className="aside">
           <h2>{peaple.moneyFormated}</h2>
-          <ButtonBase className="btn">
+          <ButtonBase className="btn" onClick={() => setModalIsOpen(true)}>
             <MdModeEdit />
           </ButtonBase>
 
@@ -46,6 +48,11 @@ export const Peaple = ({ peaple }: PeapleProps) => {
           </ButtonBase>
         </div>
       </Styles.Container>
+      <AddPeople
+        title="Atualizar a Lista"
+        modalIsOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+      />
     </>
   );
 };
