@@ -20,7 +20,7 @@ export const BarbecuesCard = ({
   return (
     <>
       <Styles.Container>
-        <Link href="/detalhes/1">
+        <Link href="/detalhes/1" passHref>
           <Styles.Content>
             <header>
               <div>
