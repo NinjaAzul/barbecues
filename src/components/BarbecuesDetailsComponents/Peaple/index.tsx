@@ -9,7 +9,7 @@ import { formatToBRL } from "utils/formatToBRL";
 import toast from "react-hot-toast";
 import { Error500 } from "shared/errors";
 import { AxiosError } from "axios";
-import { useParticipants } from "contexts/participantsContext";
+import { useParticipants } from "contexts/ParticipantsContext";
 import { api } from "services/client";
 import { useRouter } from "next/router";
 

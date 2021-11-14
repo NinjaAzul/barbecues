@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 import { Error500 } from "shared/errors";
-import { useParticipants } from "contexts/participantsContext";
+import { useParticipants } from "contexts/ParticipantsContext";
 
 const customStyles: Styles = {
   content: {
@@ -85,7 +85,7 @@ export const AddPeople = ({
   useEffect(() => {
     setValue("name", participant?.name);
     setValue("contribution", participant?.contribution);
-  }, []);
+  }, [participant?.name,participant?.contribution]);
 
   const handleAddPeople: SubmitHandler<CreateParticipantFormData> = async (
     values,

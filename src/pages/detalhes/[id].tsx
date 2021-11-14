@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import moment from "moment";
 import { formatToBRL } from "utils/formatToBRL";
-import { useParticipants } from "contexts/participantsContext";
+import { useParticipants } from "contexts/ParticipantsContext";
 
 type Participants = {
   id: string;

@@ -6,7 +6,7 @@ import { queryClient } from "services/reactQuery/queryClient";
 import { DateProvider } from "contexts/DateContext";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "../contexts/AuthContext";
-import { ParticipantsProvider } from "contexts/participantsContext";
+import { ParticipantsProvider } from "contexts/ParticipantsContext";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
