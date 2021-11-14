@@ -8,8 +8,8 @@ export const Checkbox = styled.div`
     cursor: pointer;
 
     &.check {
-      width: 25px;
-      height: 25px;
+      width: 15px;
+      height: 15px;
       background: #fff;
       border-radius: 50%;
       color: #000;
@@ -21,8 +21,8 @@ export const Checkbox = styled.div`
     }
 
     span{
-      width: 17px;
-      height: 17px;
+      width: 9px;
+      height: 9px;
       background: var(--main);
       border-radius: 50%;
       color: #000;

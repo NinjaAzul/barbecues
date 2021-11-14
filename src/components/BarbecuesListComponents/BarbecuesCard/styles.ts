@@ -7,8 +7,10 @@ interface ContainerProps {
 
 export const Container = styled.div<ContainerProps>`
  display: flex;
- min-width: 25rem;
+ min-width: 20rem;
  min-height: 12rem;
+ max-width: 20rem;
+ max-height: 12rem;
  background: var(--white);
  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.08);
  border-radius: 2px;
@@ -30,11 +32,13 @@ header{
   display: flex;
   width: 100%;
   flex-direction: column;
-  gap:0.5rem;
+  gap:1rem;
 
   div {
 width: 100%;
     h1{
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
     color: var(--black);
   }
   }

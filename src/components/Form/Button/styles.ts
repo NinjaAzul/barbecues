@@ -30,7 +30,7 @@ export const ButtonComponent = styled.button<ButtonComponentProps>`
   background: var(--black);
   color: var(--white);
   width: 100%;
-  height: 100%;
+  height: 2.5rem;
   border: 2px solid transparent;
   border-radius: 60px;
   text-decoration: none;

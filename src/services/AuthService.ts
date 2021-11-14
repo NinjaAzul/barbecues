@@ -13,7 +13,7 @@ type AuthCookiesProps = {
   user?: IUser;
 };
 
-const setAuthCookies = ({ accessToken, user }: AuthCookiesProps) => {
+export const setAuthCookies = ({ accessToken, user }: AuthCookiesProps) => {
   if (accessToken) {
     setCookie(undefined, '@barbecues:accessToken', accessToken, {
       maxAge: 60 * 60 * 24 * 30, // 30 days
@@ -31,14 +31,12 @@ const setAuthCookies = ({ accessToken, user }: AuthCookiesProps) => {
 class AuthService {
   async signIn({ email, password }: IUserSignInRequestDTO) {
     try {
-      const { data } = await api.post<IUserSignInResponseDTO>('/login', {
+      const { data } = await api.post<IUserSignInResponseDTO>('/auth', {
         email,
         password,
       });
-
-      console.log(data);
-      setAuthentication(data.accessToken);
-      setAuthCookies({ accessToken: data.accessToken, user: data.user });
+      setAuthentication(data.token);
+      setAuthCookies({ accessToken: data.token, user: data.user });
       return data;
     } catch (error) {
       const err = error as AxiosError;
@@ -61,8 +59,8 @@ class AuthService {
   async getAuthUser(accessToken: string) {
     try {
       setAuthCookies({ accessToken });
-      const { data } = await api.get<IUserSignInResponseDTO>(`/user/1`);
-      setAuthentication(data.accessToken);
+      const { data } = await api.get<IUserSignInResponseDTO>(`/me`);
+      setAuthentication(data.token);
       return data;
     } catch (error) {
       const err = error as AxiosError;
@@ -80,30 +78,7 @@ class AuthService {
     }
   }
 
-  // async signUp(payload: IUserSignUpRequestDTO) {
-  //   try {
-  //     const { data } = await api.post<IUserSignUpResponseDTO>(
-  //       '/user/register',
-  //       payload
-  //     );
-  //     setAuthentication(data.accessToken);
-  //   } catch (error) {
-  //     const err = error as AxiosError;
-  //     if (err.isAxiosError) {
-  //       switch (err.response.status) {
-  //         case 400:
-  //           throw new Error(
-  //             'Erro ao cadastrar, verifique os dados informados.'
-  //           );
-  //         case 500:
-  //           throw new Error(Error500);
-  //         default:
-  //           throw new Error(err.response.statusText);
-  //       }
-  //     }
-  //     throw new Error(err.message);
-  //   }
-  // }
+ 
 
 }
 

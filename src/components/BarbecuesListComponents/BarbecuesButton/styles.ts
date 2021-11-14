@@ -7,7 +7,9 @@ interface ContainerProps {
 
 export const Container = styled.div<ContainerProps>`
  display: flex;
- min-width: 25rem;
+ min-width: 20rem;
+ min-height: 12rem;
+ min-width: 20rem;
  min-height: 12rem;
  background: var(--gray);
  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.08);

@@ -5,10 +5,14 @@ import { ButtonBase, Grid } from "@material-ui/core";
 import { ModalContent } from "./styles";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
-import { signInFormSchema } from "shared/validators/index";
+import { createScheduleFormSchema } from "shared/validators/index";
 import { Input } from "components/Form/Input";
 import { Button } from "components/Form/Button";
-import { SelectDate } from "components/SelectRentalRange";
+import { AxiosError } from "axios";
+import { Error500 } from "shared/errors";
+import toast from "react-hot-toast";
+import { api } from "services/client";
+import { useSchedules } from "hooks/useSchedules";
 
 const customStyles: Styles = {
   content: {
@@ -44,28 +48,52 @@ export const CreateSchedule = ({
     onRequestClose();
   }
 
+  const { refetch } = useSchedules();
+
   const { register, handleSubmit, formState, reset } = useForm({
-    resolver: yupResolver(signInFormSchema),
+    resolver: yupResolver(createScheduleFormSchema),
   });
   const { isSubmitting, isSubmitSuccessful, errors } = formState;
 
-  type SignInFormData = {
-    email: string;
-    password: string;
+  type CreateScheduleData = {
+    title: string;
+    data: Date;
+    with_drink: number;
+    no_drink: number;
   };
 
-  const handleCreateSchedule: SubmitHandler<SignInFormData> = async (
-    data,
+  const handleCreateSchedule: SubmitHandler<CreateScheduleData> = async (
+    values,
     event
   ) => {
-    // await new Promise((resolve) => setTimeout(resolve, 6000)); // 6sig awaiting.
+    event.preventDefault();
 
-    // // if (isSubmitSuccessful) {
-    // //   alert("deu bom cuzão");
-    // // }
+    const createSchedule = {
+      title: values.title,
+      data: new Date(values.data),
+      with_drink: Number(values.with_drink),
+      no_drink: Number(values.no_drink),
+    };
 
-    // reset();
-    console.log(data);
+    try {
+      await api.post("/schedule", createSchedule);
+      reset();
+      onRequestClose();
+      refetch();
+      toast.success("O agendamento foi criado com sucesso!");
+    } catch (error) {
+      const err = error as AxiosError;
+      if (err.isAxiosError) {
+        switch (err.response.status) {
+          case 500:
+            toast.error("Ops... algo deu errado!");
+            throw new Error(Error500);
+          default:
+            throw new Error(err.response.statusText);
+        }
+      }
+      throw new Error(err.message);
+    }
   };
 
   return (
@@ -100,54 +128,44 @@ export const CreateSchedule = ({
                 type="text"
                 label="Título"
                 placeholder="Título"
-                error={errors.email}
-                {...register("email")}
+                error={errors.title}
+                {...register("title")}
               />
             </Grid>
 
-            <Grid
-              item
-              xs={12}
-              sm={6}
-            >
+            <Grid item xs={12} sm={6}>
               <Input
                 variant="withBorder"
-                name="date-event"
+                name="data"
                 type="date"
                 label="Data"
                 placeholder="Data"
-                error={errors.email}
-                {...register("email")}
+                error={errors.data}
+                {...register("data")}
               />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-            >
+            <Grid item xs={12} sm={6}>
               <Input
                 variant="withBorder"
-                name="noDrink"
+                name="no_drink"
                 type="number"
-                label="Sem Bebida"
+                step="any"
+                label="Sem Bebida (valor sugerido)"
                 placeholder="R$ 0,00"
-                error={errors.email}
-                {...register("email")}
+                error={errors.no_drink}
+                {...register("no_drink")}
               />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-            >
+            <Grid item xs={12} sm={6}>
               <Input
                 variant="withBorder"
-                name="WithDrink"
+                name="with_drink"
                 type="number"
-                label="Com bebida"
+                step="any"
+                label="Com bebida (valor sugerido)"
                 placeholder="R$ 0,00"
-                error={errors.email}
-                {...register("email")}
+                error={errors.with_drink}
+                {...register("with_drink")}
               />
             </Grid>
           </Grid>

@@ -46,6 +46,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         } catch (err) {
           setUser(undefined);
           destroyCookie(undefined, "@barbecues:accessToken");
+          router.push("/");
         }
       }
     })();
@@ -69,11 +70,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
       destroyCookie(undefined, "@barbecues:userData");
       const { "@barbecues:accessToken": accessToken } = parseCookies();
       if (!accessToken) {
+        toast.success("Deslogado com sucesso!");
         setUser(undefined);
-        router.push("/home");
+        router.push("/");
         resolve(true);
       } else {
         reject({ message: "Cannot delete cookies!" });
+        toast.error("Ops... algo deu errado!");
       }
     });
   }, []);
@@ -84,6 +87,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         user,
         signIn,
         signOut,
+        setUser,
         isAuthenticated,
       }}
     >

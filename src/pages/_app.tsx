@@ -6,16 +6,19 @@ import { queryClient } from "services/reactQuery/queryClient";
 import { DateProvider } from "contexts/DateContext";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "../contexts/AuthContext";
+import { ParticipantsProvider } from "contexts/participantsContext";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <DateProvider>
         <AuthProvider>
-          <GlobalStyle />
-          <Toaster  position="top-right"/>
-          <Component {...pageProps} />
-          <ReactQueryDevtools />
+          <ParticipantsProvider>
+            <GlobalStyle />
+            <Toaster position="top-right" />
+            <Component {...pageProps} />
+            <ReactQueryDevtools />
+          </ParticipantsProvider>
         </AuthProvider>
       </DateProvider>
     </QueryClientProvider>

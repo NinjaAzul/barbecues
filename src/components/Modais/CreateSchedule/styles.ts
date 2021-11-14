@@ -6,8 +6,8 @@ export const ModalContent = styled.div`
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  width: 60rem;
-  height: 30rem;
+  width: 100%;
+  height: 90vh;
   border-radius: 3px;
   background: var(--white);
   color: var(--black);
@@ -23,6 +23,7 @@ export const ModalContent = styled.div`
     justify-content: space-between;
     height: calc(30rem - 3rem);
     width: 100%;
+    gap: 1rem;
 }
 
 .container-calendar{
@@ -42,7 +43,7 @@ export const ModalContent = styled.div`
     height: 3rem;
 
     font-family: "Raleway", sans-serif;
-    font-size: 2rem;
+    font-size: 1.3rem;
     font-style: normal;
     font-weight: 700;
     line-height: 2rem;

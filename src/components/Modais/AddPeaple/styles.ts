@@ -6,8 +6,8 @@ export const ModalContent = styled.div`
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  width: 60rem;
-  height: 30rem;
+  width: 100%;
+  height: 84vh;
   border-radius: 3px;
   background: var(--white);
   color: var(--black);
@@ -15,6 +15,7 @@ export const ModalContent = styled.div`
   padding: -10;
   transition: all 0.3s;
   gap:2rem;
+
 
 .form-container-modal{
     padding: 5rem 3rem 3rem;
@@ -44,6 +45,14 @@ export const ModalContent = styled.div`
     gap:0.5rem;
 }
 
+.mbttom{
+
+  @media (max-width: 980px){
+    margin-bottom: 1rem;
+  }
+  
+}
+
   header{
     padding: 1rem;
     background: var(--background-modal);
@@ -56,7 +65,7 @@ export const ModalContent = styled.div`
     height: 3rem;
 
     font-family: "Raleway", sans-serif;
-    font-size: 2rem;
+    font-size: 1.3rem;
     font-style: normal;
     font-weight: 700;
     line-height: 2rem;

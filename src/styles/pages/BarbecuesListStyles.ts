@@ -13,24 +13,32 @@ export const Container = styled.div`
 export const Content = styled.div`
  padding: 0 1.5rem;
  display: grid;
- grid-template-columns: repeat(1, 1fr);
  grid-gap: 1rem;
  width: 100%;
 
- @media (max-width: 1100px) {
+ @media (min-width: 700px) {
     place-items: center;
-  }
-
-  @media (min-width: 1100px) {
+    justify-content: center;
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (min-width: 1200px) {
+ @media (max-width: 1100px) {
+    place-items: center;
+    justify-content: center;
+  }
+
+  @media (min-width: 1100px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media (min-width: 1680px) {
+  @media (min-width: 1440px) {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+
+
+  @media (min-width: 1680px) {
+    grid-template-columns: repeat(5, 1fr);
   }
 `;
 

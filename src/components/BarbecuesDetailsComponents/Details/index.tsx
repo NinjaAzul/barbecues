@@ -5,53 +5,36 @@ import { ButtonBase } from "@material-ui/core";
 import { Peaple } from "../Peaple";
 import { AddPeople } from "components/Modais/AddPeaple";
 
+type Participants = {
+  id: string;
+  name: string;
+  contribution: number;
+  isConfirmated: boolean;
+};
+
 interface DetailsProps {
   title: string;
   date: string;
   quantity: number;
   moneyFormated: string;
+  total_money: number;
+  with_drink: number;
+  no_drink: number;
+  participants: Participants[];
 }
-
-const peaples = [
-  {
-    id: "1",
-    isChecked: true,
-    name: "Erick eqwe",
-    moneyFormated: "R$ 300,00",
-  },
-  {
-    id: "2",
-    isChecked: false,
-    name: "Erick eqwe",
-    moneyFormated: "R$ 400,00",
-  },
-  {
-    id: "3",
-    isChecked: true,
-    name: "Erickeqwe",
-    moneyFormated: "R$ 500,00",
-  },
-  {
-    id: "4",
-    isChecked: false,
-    name: "Erick eqeq",
-    moneyFormated: "R$ 700,00",
-  },
-  {
-    id: "5",
-    isChecked: true,
-    name: "Erick de Freitas",
-    moneyFormated: "R$ 800,00",
-  },
-];
 
 export const Details = ({
   title,
   date,
   quantity,
   moneyFormated,
+  total_money,
+  with_drink,
+  no_drink,
+  participants,
 }: DetailsProps) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   return (
     <>
@@ -81,15 +64,26 @@ export const Details = ({
             </main>
           </header>
 
-          {peaples.map((people) => (
-            <Peaple key={people.id} peaple={people} />
-          ))}
+          {participants &&
+            participants.map((participant) => (
+              <Peaple
+                key={participant.id}
+                total_money={total_money}
+                quantity={quantity}
+                participant={participant}
+                with_drink={with_drink}
+                no_drink={no_drink}
+              />
+            ))}
         </Styles.Content>
       </Styles.Container>
       <AddPeople
         title="Adicionar a Lista"
         modalIsOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
+        with_drink={with_drink}
+        no_drink={no_drink}
+        isEdit={isEdit}
       />
     </>
   );

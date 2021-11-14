@@ -19,3 +19,15 @@ export const signUpFormSchema = yup.object().shape({
     .required("Confirmar senha obrigatória")
     .oneOf([yup.ref("password"), null], "Senhas não coincidem"),
 });
+
+export const createScheduleFormSchema = yup.object().shape({
+  title: yup.string().required("Título obrigatório"),
+  data: yup.string().required("Data obrigatório"),
+  with_drink: yup.string().required("com bebida obrigatório"),
+  no_drink: yup.string().required("sem bebida obrigatório"),
+});
+
+export const participantFormSchema = yup.object().shape({
+  name: yup.string().required("Nome obrigatório"),
+  contribution: yup.string().required("Valor obrigatório"),
+});

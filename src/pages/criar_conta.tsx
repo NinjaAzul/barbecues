@@ -9,10 +9,16 @@ import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { signUpFormSchema } from "shared/validators/index";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
-import { api } from "services/client";
+import { api, setAuthentication } from "services/client";
+import { withSSRGuest } from "utils/withSSRGuest";
+import { setAuthCookies } from "services/AuthService";
+import { useAuth } from "contexts/AuthContext";
+import { Error500 } from "shared/errors";
+import { AxiosError } from "axios";
 
 const CreateAccount: NextPage = () => {
   const { push } = useRouter();
+  const { setUser } = useAuth();
   const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(signUpFormSchema),
   });
@@ -27,13 +33,28 @@ const CreateAccount: NextPage = () => {
     event.preventDefault();
 
     try {
-      const { data } = await api.post("/signup", values);
+      const { data } = await api.post("/user/register", values);
+      setAuthentication(data.token);
+      setAuthCookies({ accessToken: data.token, user: data.user });
+      setUser(data.user);
       reset();
       toast.success("Usuário criado com sucesso!");
       push("/agendamentos");
-    } catch (err) {
-      console.error(err.reponse);
-      toast.error("Ops... algo deu errado!");
+    } catch (error) {
+      const err = error as AxiosError;
+      if (err.isAxiosError) {
+        switch (err.response.status) {
+          case 400:
+            toast.error("E-mail já utilizado.");
+            throw new Error("E-mail já utilizado.");
+          case 500:
+            toast.error("Ops... algo deu errado!");
+            throw new Error(Error500);
+          default:
+            throw new Error(err.response.statusText);
+        }
+      }
+      throw new Error(err.message);
     }
   };
 
@@ -88,3 +109,9 @@ const CreateAccount: NextPage = () => {
 };
 
 export default CreateAccount;
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+  return {
+    props: {},
+  };
+});

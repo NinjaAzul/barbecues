@@ -9,9 +9,11 @@ interface BarbecuesCardProps {
   date: string;
   quantity: number;
   moneyFormated: string;
+  id:number;
 }
 
 export const BarbecuesCard = ({
+  id,
   title,
   date,
   quantity,
@@ -20,7 +22,7 @@ export const BarbecuesCard = ({
   return (
     <>
       <Styles.Container>
-        <Link href="/detalhes/1" passHref>
+        <Link href={`/detalhes/${id}`} passHref>
           <Styles.Content>
             <header>
               <div>
