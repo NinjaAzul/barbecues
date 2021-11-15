@@ -41,7 +41,7 @@ export const Details = ({ schedule }: Schedule) => {
         <Styles.Content>
           <header>
             <main>
-              <h1>{moment(schedule?.data).locale("pt-br").format("L")}</h1>
+              <h1>{moment(new Date(schedule?.data)).format("DD/MM/YYYY")}</h1>
 
               <h2>{schedule?.title}</h2>
             </main>
