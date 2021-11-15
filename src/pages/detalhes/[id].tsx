@@ -20,8 +20,8 @@ const BarbecuesDetails: NextPage = () => {
     setLoading(true);
     const { data } = await api.get(`/schedule/${id}`);
     setSchedule(data);
-    setTotalMoney(data.schedule.total_money);
-    setTotalPeaple(data.schedule.total_peaple);
+    setTotalMoney(data.schedule?.total_money);
+    setTotalPeaple(data.schedule?.total_peaple);
     setLoading(false);
   };
 

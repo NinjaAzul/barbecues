@@ -120,7 +120,7 @@ export const Peaple = ({ participant, no_drink, with_drink }: PeapleProps) => {
           <h2 className={isChecked && `checked`}>
             {formatToBRL(participant.contribution)}
           </h2>
-          <ButtonBase
+          {/* <ButtonBase
             className="btn"
             onClick={() => {
               setModalIsOpen(true);
@@ -128,7 +128,7 @@ export const Peaple = ({ participant, no_drink, with_drink }: PeapleProps) => {
             }}
           >
             <MdModeEdit />
-          </ButtonBase>
+          </ButtonBase> */}
 
           <ButtonBase
             className="btn"

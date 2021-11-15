@@ -65,7 +65,14 @@ export const AddPeople = ({
   }
 
   const { query } = useRouter();
-  const { setParticipantsIsChange, participantsIsChange } = useParticipants();
+  const {
+    setParticipantsIsChange,
+    participantsIsChange,
+    setTotalMoney,
+    setTotalPeaple,
+    totalMoney,
+    totalPeaple,
+  } = useParticipants();
 
   const { register, handleSubmit, formState, reset, setValue } = useForm({
     resolver: yupResolver(participantFormSchema),
@@ -85,13 +92,15 @@ export const AddPeople = ({
   useEffect(() => {
     setValue("name", participant?.name);
     setValue("contribution", participant?.contribution);
-  }, [participant?.name,participant?.contribution]);
+  }, [participant?.name, participant?.contribution]);
 
   const handleAddPeople: SubmitHandler<CreateParticipantFormData> = async (
     values,
     event
   ) => {
     event.preventDefault();
+
+ 
 
     const createParticipant = {
       name: values.name,
@@ -118,8 +127,6 @@ export const AddPeople = ({
       }
       throw new Error(err.message);
     }
-
-
   };
 
   const handleEditPeople: SubmitHandler<UpdateParticipantFormData> = async (
@@ -127,6 +134,26 @@ export const AddPeople = ({
     event
   ) => {
     event.preventDefault();
+
+    const total = values?.contribution + totalMoney;
+    const totalLess = totalMoney - values?.contribution;
+
+    if (totalMoney < values?.contribution) {
+      await api.put(`schedule/${query.id}`, {
+        total_money: totalLess,
+      });
+
+      setTotalMoney(totalLess);
+    }
+
+    if (totalMoney > values?.contribution) {
+      await api.put(`schedule/${query.id}`, {
+        total_money: total,
+        total_peaple: totalPeaple + 1,
+      });
+ -
+      setTotalMoney(total);
+    }
 
     const updateParticipant = {
       name: values.name,
@@ -152,7 +179,6 @@ export const AddPeople = ({
       }
       throw new Error(err.message);
     }
-
   };
 
   return (
