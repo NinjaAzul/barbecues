@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { ButtonBase } from "@material-ui/core";
 import { Peaple } from "../Peaple";
 import { AddPeople } from "components/Modais/AddPeaple";
+import moment from "moment";
+import { formatToBRL } from "utils/formatToBRL";
+import { useParticipants } from "contexts/ParticipantsContext";
 
 type Participants = {
   id: string;
@@ -12,29 +15,25 @@ type Participants = {
   isConfirmated: boolean;
 };
 
-interface DetailsProps {
-  title: string;
-  date: string;
-  quantity: number;
-  moneyFormated: string;
-  total_money: number;
-  with_drink: number;
-  no_drink: number;
-  participants: Participants[];
-}
+type Schedule = {
+  schedule: {
+    id: number;
+    title: string;
+    data: Date;
+    with_drink: number;
+    no_drink: number;
+    total_money: number;
+    total_peaple: number;
+    created_at: Date;
+    updated_at: Date;
+    participants: Participants[];
+  };
+};
 
-export const Details = ({
-  title,
-  date,
-  quantity,
-  moneyFormated,
-  total_money,
-  with_drink,
-  no_drink,
-  participants,
-}: DetailsProps) => {
+export const Details = ({ schedule }: Schedule) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const { totalMoney, totalPeaple } = useParticipants();
 
   return (
     <>
@@ -42,20 +41,20 @@ export const Details = ({
         <Styles.Content>
           <header>
             <main>
-              <h1>{date}</h1>
+              <h1>{moment(schedule?.data).locale("pt-br").format("L")}</h1>
 
-              <h2>{title}</h2>
+              <h2>{schedule?.title}</h2>
             </main>
 
             <main className="side">
               <div>
                 <Users />
-                <span>{quantity}</span>
+                <span>{totalPeaple}</span>
               </div>
 
               <div>
                 <Money />
-                <span>{moneyFormated}</span>
+                <span>{formatToBRL(totalMoney)}</span>
               </div>
 
               <ButtonBase onClick={() => setModalIsOpen(true)}>
@@ -64,15 +63,15 @@ export const Details = ({
             </main>
           </header>
 
-          {participants &&
-            participants.map((participant) => (
+          {schedule?.participants &&
+            schedule?.participants.map((participant) => (
               <Peaple
                 key={participant.id}
-                total_money={total_money}
-                quantity={quantity}
+                total_money={schedule?.total_money}
+                quantity={schedule?.total_peaple}
                 participant={participant}
-                with_drink={with_drink}
-                no_drink={no_drink}
+                with_drink={schedule?.with_drink}
+                no_drink={schedule?.no_drink}
               />
             ))}
         </Styles.Content>
@@ -81,8 +80,8 @@ export const Details = ({
         title="Adicionar a Lista"
         modalIsOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
-        with_drink={with_drink}
-        no_drink={no_drink}
+        with_drink={schedule?.with_drink}
+        no_drink={schedule?.no_drink}
         isEdit={isEdit}
       />
     </>

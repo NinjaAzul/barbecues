@@ -28,37 +28,45 @@ interface PeapleProps {
   quantity: number;
 }
 
-export const Peaple = ({
-  participant,
-  no_drink,
-  with_drink,
-  total_money,
-  quantity,
-}: PeapleProps) => {
+export const Peaple = ({ participant, no_drink, with_drink }: PeapleProps) => {
   const [isChecked, setIsChecked] = useState(participant.isConfirmated);
   const { query } = useRouter();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [id, setId] = useState("");
-  const { participantsIsChange, setParticipantsIsChange } = useParticipants();
+  const {
+    participantsIsChange,
+    setParticipantsIsChange,
+    setTotalMoney,
+    setTotalPeaple,
+    totalMoney,
+    totalPeaple,
+  } = useParticipants();
 
   const handleOnChange = async (id, contribution) => {
-    const total = contribution + total_money;
-    const totalLess =  total_money - contribution;
+    const total = contribution + totalMoney;
+    const totalLess = totalMoney - contribution;
     console.log(total);
     setIsChecked(!isChecked);
-    if(!isChecked){
+    if (!isChecked) {
       await api.put(`participants/${id}`, { isConfirmated: !isChecked });
-      await api.put(`schedule/${query.id}` , {total_money : total , total_peaple: quantity + 1});
-      setParticipantsIsChange(!participantsIsChange);
+      await api.put(`schedule/${query.id}`, {
+        total_money: total,
+        total_peaple: totalPeaple + 1,
+      });
+      setTotalPeaple(totalPeaple + 1);
+      setTotalMoney(total);
     }
 
-    if(isChecked){
+    if (isChecked) {
       await api.put(`participants/${id}`, { isConfirmated: !isChecked });
-      await api.put(`schedule/${query.id}` , {total_money : totalLess , total_peaple: quantity - 1});
-      setParticipantsIsChange(!participantsIsChange);
+      await api.put(`schedule/${query.id}`, {
+        total_money: totalLess,
+        total_peaple: totalPeaple - 1,
+      });
+      setTotalPeaple(totalPeaple - 1);
+      setTotalMoney(totalLess);
     }
-  
   };
 
   const handleDeleteParticipant = async (id) => {
