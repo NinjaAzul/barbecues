@@ -31,8 +31,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     (async () => {
-      const { "@barbecues:accessToken": accessToken, "@barbecues:userData": userData } =
-        parseCookies();
+      const {
+        "@barbecues:accessToken": accessToken,
+        "@barbecues:userData": userData,
+      } = parseCookies();
 
       if (userData && accessToken) {
         const userFormated: IUser = JSON.parse(userData);
@@ -66,18 +68,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const signOut = useCallback(async () => {
     await new Promise((resolve, reject) => {
       destroyCookie(undefined, "@barbecues:accessToken");
-      destroyCookie(undefined, "@barbecues:userId");
       destroyCookie(undefined, "@barbecues:userData");
-      const { "@barbecues:accessToken": accessToken } = parseCookies();
-      if (!accessToken) {
-        toast.success("Deslogado com sucesso!");
-        setUser(undefined);
-        router.push("/");
-        resolve(true);
-      } else {
-        reject({ message: "Cannot delete cookies!" });
-        toast.error("Ops... algo deu errado!");
-      }
+      toast.success("Deslogado com sucesso!");
+      setUser(undefined);
+      router.push("/");
+      resolve(true);
     });
   }, []);
 
