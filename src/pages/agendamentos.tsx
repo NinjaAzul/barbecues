@@ -5,7 +5,7 @@ import { BarbecuesCard } from "components/BarbecuesListComponents/BarbecuesCard"
 import { BarbecuesButton } from "components/BarbecuesListComponents/BarbecuesButton";
 import { withSSRAuth } from "utils/withSSRAuth";
 import { getAllSchedules, useSchedules } from "hooks/useSchedules";
-import moment from "moment";
+
 import React, { useEffect, useState } from "react";
 import { formatToBRL } from "utils/formatToBRL";
 
@@ -27,7 +27,7 @@ const BarbecuesList = ({ schedules }) => {
                   id={schedule.id}
                   title={schedule.title}
                   quantity={schedule.total_peaple}
-                  date={moment(schedule.data).locale("pt-br").format("L")}
+                  date={schedule?.data}
                   moneyFormated={formatToBRL(schedule.total_money)}
                 />
               </div>

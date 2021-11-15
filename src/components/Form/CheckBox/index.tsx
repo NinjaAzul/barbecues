@@ -9,6 +9,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label?: string;
   isChecked: boolean;
+  disabled?: boolean;
   handleOnChange: () => void;
 }
 

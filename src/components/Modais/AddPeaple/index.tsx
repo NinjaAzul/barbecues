@@ -119,7 +119,7 @@ export const AddPeople = ({
       throw new Error(err.message);
     }
 
-    console.log(values);
+
   };
 
   const handleEditPeople: SubmitHandler<UpdateParticipantFormData> = async (
@@ -153,7 +153,6 @@ export const AddPeople = ({
       throw new Error(err.message);
     }
 
-    console.log(values);
   };
 
   return (

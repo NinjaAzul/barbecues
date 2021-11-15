@@ -20,6 +20,11 @@ export const Checkbox = styled.div`
       border: 3px solid #998220;
     }
 
+    &:disabled{
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
     span{
       width: 9px;
       height: 9px;

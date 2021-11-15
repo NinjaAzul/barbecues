@@ -32,6 +32,7 @@ export const Peaple = ({ participant, no_drink, with_drink }: PeapleProps) => {
   const [isChecked, setIsChecked] = useState(participant.isConfirmated);
   const { query } = useRouter();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [id, setId] = useState("");
   const {
@@ -44,9 +45,9 @@ export const Peaple = ({ participant, no_drink, with_drink }: PeapleProps) => {
   } = useParticipants();
 
   const handleOnChange = async (id, contribution) => {
+    setLoading(true);
     const total = contribution + totalMoney;
     const totalLess = totalMoney - contribution;
-    console.log(total);
     setIsChecked(!isChecked);
     if (!isChecked) {
       await api.put(`participants/${id}`, { isConfirmated: !isChecked });
@@ -56,6 +57,7 @@ export const Peaple = ({ participant, no_drink, with_drink }: PeapleProps) => {
       });
       setTotalPeaple(totalPeaple + 1);
       setTotalMoney(total);
+      setLoading(false);
     }
 
     if (isChecked) {
@@ -66,7 +68,10 @@ export const Peaple = ({ participant, no_drink, with_drink }: PeapleProps) => {
       });
       setTotalPeaple(totalPeaple - 1);
       setTotalMoney(totalLess);
+      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   const handleDeleteParticipant = async (id) => {
@@ -94,6 +99,7 @@ export const Peaple = ({ participant, no_drink, with_drink }: PeapleProps) => {
       <Styles.Container>
         <div className="main">
           <Checkbox
+            disabled={loading}
             name={participant.id}
             handleOnChange={() =>
               handleOnChange(participant.id, participant.contribution)

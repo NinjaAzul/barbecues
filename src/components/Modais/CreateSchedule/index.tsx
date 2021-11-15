@@ -13,6 +13,7 @@ import { Error500 } from "shared/errors";
 import toast from "react-hot-toast";
 import { api } from "services/client";
 import { useSchedules } from "hooks/useSchedules";
+import moment from "moment";
 
 const customStyles: Styles = {
   content: {
@@ -68,9 +69,10 @@ export const CreateSchedule = ({
   ) => {
     event.preventDefault();
 
+  
     const createSchedule = {
       title: values.title,
-      data: new Date(values.data),
+      data: moment(values.data).locale("pt-br"),
       with_drink: Number(values.with_drink),
       no_drink: Number(values.no_drink),
     };
