@@ -8,7 +8,7 @@ export function setupAPI(ctx?: GetServerSidePropsContext) {
   const { '@barbecues:accessToken': accessToken } = parseCookies(ctx);
 
   const api = axios.create({
-    baseURL: 'http://localhost:3333',
+    baseURL: process.env.URL_PORT_PROD || 'http://localhost:3333',
   });
 
   if (accessToken) api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
