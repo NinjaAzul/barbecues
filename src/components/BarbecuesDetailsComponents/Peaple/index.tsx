@@ -74,10 +74,17 @@ export const Peaple = ({ participant, no_drink, with_drink }: PeapleProps) => {
     setLoading(false);
   };
 
-  const handleDeleteParticipant = async (id) => {
+  const handleDeleteParticipant = async (id, contribution) => {
+    const totalLess = totalMoney - contribution;
     try {
       await api.delete(`/participants/${id}`);
       setParticipantsIsChange(!participantsIsChange);
+      await api.put(`schedule/${query.id}`, {
+        total_money: totalLess,
+        total_peaple: totalPeaple - 1,
+      });
+      setTotalPeaple(totalPeaple - 1);
+      setTotalMoney(totalLess);
       toast.success("O participante foi deletado com sucesso!");
     } catch (error) {
       const err = error as AxiosError;
@@ -125,7 +132,7 @@ export const Peaple = ({ participant, no_drink, with_drink }: PeapleProps) => {
 
           <ButtonBase
             className="btn"
-            onClick={() => handleDeleteParticipant(participant.id)}
+            onClick={() => handleDeleteParticipant(participant.id, participant.contribution)}
           >
             <FaTrash />
           </ButtonBase>
